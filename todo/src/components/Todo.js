@@ -1,54 +1,18 @@
-import React, { useState, useReducer } from 'react';
+import React from 'react'
+import './Todo.css';
 
-
-const Todo = () => {
-    const [todoState, dispatch] = useReducer(todoReducer, initialTodo);
-    const [newTodo, setNewToDo] = useState("");
-
-
-    const handleChange = (e) => {
-        setNewToDo(e.target.value);
-    }
-
-    const handleCompleted = (itemId) => {
-        dispatch ({ type: "TODO_CLICKER", payload: itemId });
-    }
-
-    const handleClearList = (e) => {
-        dispatch({ type: "CLEAR-COMPLETED" });
-    }
+// STEP 4 - Toggle the completed field
+const Todo = props => {
+    console.log("item",props)
     return (
-        <>
-        <form 
-        onSubmit={(e) => {
-        e.preventDefault();
-        }}
-        >
-        <label htmlFor='inputToDo'>
-            Enter your Todo
-            <Input 
-            id='inputToDo'
-            type='text'
-            name='inputSelect'
-            value={newTodo}
-            onChange={handleChange}
-            />
-        </label>
-        <button 
-        onClick={() => {
-            dispatch({ type: "ADDED_TODO",  payload: newTodo });
-            setNewToDo("");
-        }}
-        >
-            Add
-        </button>
-        <button name='clearButton' onClick={handleClearList}>
-        Clear
-        </button>
-        </form>
-        <TodoList />
-        </>
+        <div 
+        className={
+            `item ${props.item.finished ? 'finished' : ''}`}
+            onClick={()=> props.toggleItem(props.item.id)}
+            >
+            <p>{props.item.task}</p>
+        </div>
     )
-};
+}
 
-export default Todo
+export default Todo;
